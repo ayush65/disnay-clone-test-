@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { collection, doc, getDoc } from "firebase/firestore";
 import db from "../firebase.js";
+import YouTube from 'react-youtube';
 
 
 const Detail = (props) => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
+  const [showVideo, setShowVideo] = useState(false);
+  const playerRef = useRef(null);
 
   useEffect(() => {
     const moviesRef = collection(db, "movies");
@@ -27,6 +30,29 @@ const Detail = (props) => {
       });
   }, [id]);
 
+  const videoId = 'ycoY201RTRo'; // Extracted from the YouTube URL
+
+  const onPlayerReady = (event) => {
+    playerRef.current = event.target;
+  };
+
+  const playVideoInFullscreen = () => {
+    setShowVideo(true);
+    if (playerRef.current) {
+      playerRef.current.playVideo();
+      const iframe = playerRef.current.getIframe();
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) { /* Firefox */
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) { /* IE/Edge */
+        iframe.msRequestFullscreen();
+      }
+    }
+  };
+
   return (
     <Container>
       <Background>
@@ -38,7 +64,7 @@ const Detail = (props) => {
       </ImageTitle>
       <ContentMeta>
         <Controls>
-          <Player>
+          <Player onClick={playVideoInFullscreen}>
             <img src="/images/play-icon-black.png" alt="" />
             <span>Play</span>
           </Player>
@@ -59,6 +85,19 @@ const Detail = (props) => {
         <SubTitle>{detailData.subTitle}</SubTitle>
         <Description>{detailData.description}</Description>
       </ContentMeta>
+      {showVideo && (
+        <YouTube
+          videoId={videoId}
+          opts={{
+            height: '390',
+            width: '640',
+            playerVars: {
+              autoplay: 0,
+            },
+          }}
+          onReady={onPlayerReady}
+        />
+      )}
     </Container>
   );
 };
