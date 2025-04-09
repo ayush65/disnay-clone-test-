@@ -3,14 +3,14 @@ import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA7GRZHeP8yBUK-kZsXA6ViroMjQZOVxFQ",
-  authDomain: "mahakumbh-endless-runner-2024.firebaseapp.com",
-  projectId: "mahakumbh-endless-runner-2024",
-  storageBucket: "mahakumbh-endless-runner-2024.firebasestorage.app",
-  messagingSenderId: "786224550632",
-  appId: "1:786224550632:web:b00aaa6b7297cfde7e2f5d"
+  apiKey: "kjrgkergvhe",
+  authDomain: "dddddddddddddddcom",
+  projectId: "dddddd-2024",
+  storageBucket: "dddddddddddddddddddddge.app",
+  messagingSenderId: "786rrgh224550632",
+  appId: "1:78622455e45y5i8io9otrggg5h65j0632:web:b00aaa6b7297cfde7e2f5d"
 };
-
+// kkkk
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
